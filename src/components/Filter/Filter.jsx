@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import styles from "./Form.module.css";
+import styles from "./Filter.module.css";
 
 const Filter = ({ onChange, value }) => {
     return (

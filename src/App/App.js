@@ -4,7 +4,7 @@ import styles from "../components/Form/Form.module.css";
 import React from "react";
 import Contact from "../components/Contact/Contact";
 import Form from "../components/Form/Form";
-import Filter from "../components/Form/Filter";
+import Filter from "../components/Filter/Filter";
 
 class App extends React.Component {
   state = {
