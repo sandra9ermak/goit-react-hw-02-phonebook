@@ -25,6 +25,8 @@ class App extends React.Component {
       )
     ) {
       return Notiflix.Notify.warning(`${name} is already in contacts`);
+    } else if (this.state.contacts.some((item) => item.number === number)) {
+      return Notiflix.Notify.warning(`${number} is already in contacts`);
     } else {
       this.setState((prevState) => ({
         contacts: [...prevState.contacts, item],
