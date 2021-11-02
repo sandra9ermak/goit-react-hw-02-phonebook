@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import styles from "./Contact.module.css";
 
 const Contact = ({ filter, onClick }) => {
@@ -8,7 +10,7 @@ const Contact = ({ filter, onClick }) => {
             <li key={item.id} className={styles.contactItem}>
                 <span className={styles.spanName}>{item.name}</span>
                 <span className={styles.spanNumber}>{item.number}</span>
-                <button type="submit" onClick={(e) => onClick(item.id)} className={styles.contactButton}>Delete</button>
+                <button type="submit" onClick={() => onClick(item.id)} className={styles.contactButton}>Delete</button>
             </li>
             )}
     </ul>
@@ -16,3 +18,8 @@ const Contact = ({ filter, onClick }) => {
 }
 
 export default Contact;
+
+Contact.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    filter: PropTypes.func.isRequired
+}

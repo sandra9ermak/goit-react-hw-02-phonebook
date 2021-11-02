@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from "./Form.module.css";
 
 const Filter = ({ onChange, value }) => {
@@ -10,3 +11,8 @@ const Filter = ({ onChange, value }) => {
 }
 
 export default Filter;
+
+Filter.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired
+}
