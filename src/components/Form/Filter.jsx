@@ -1,8 +1,10 @@
-const Filter = ({onChange}) => {
+import styles from "./Form.module.css";
+
+const Filter = ({ onChange, value }) => {
     return (
         <label>
-            <input type="text" name="filter" placeholder="Search contact" onChange={onChange} />
-            <button type="submit">Search</button>
+            <input className={styles.inputSearch} type="text" name="filter" value={value} placeholder="Search contact" onChange={onChange} />
+            <button className={styles.button} type="submit">Search</button>
         </label>
     )
 }

@@ -1,10 +1,8 @@
+import Notiflix from "notiflix";
 import "./App.css";
+import styles from "../components/Form/Form.module.css";
 import React from "react";
-import { v4 as uuidv4 } from "uuid";
 import Contact from "../components/Contact/Contact";
-/* import InputPerson from "../components/Input/InputPerson";
-import InputContacts from "../components/Input/InputContacts";
-import InputButton from "../components/Input/InputButton"; */
 import Form from "../components/Form/Form";
 import Filter from "../components/Form/Filter";
 
@@ -19,55 +17,64 @@ class App extends React.Component {
     filter: "",
   };
 
-  formHandlerSubmit = (data) => {
-    console.log(data);
+  renderContact = ({ name, number, id }) => {
+    const item = {
+      id,
+      name,
+      number,
+    };
+
+    if (this.state.contacts.some((item) => item.name === name)) {
+      return Notiflix.Notify.warning(`${name} is already in contacts`);
+    } else {
+      this.setState((prevState) => ({
+        contacts: [...prevState.contacts, item],
+      }));
+    }
   };
 
-  // handleInputChange = (event) => {
-  //   this.setState({
-  //     [event.currentTarget.filter]: event.currentTarget.value,
-  //   });
-  // };
-
-  filterSubmit = (event) => {
+  handleInputChange = (event) => {
+    const { name, value } = event.currentTarget;
     this.setState({
-      [event.currentTarget.filter]: event.currentTarget.value,
+      [name]: value,
     });
-    console.log(this.state.filter);
+  };
+
+  filteredContacts = () => {
+    return this.state.contacts.filter(
+      (item) =>
+        item.name.toLowerCase().includes(this.state.filter.toLowerCase()) ||
+        item.number.includes(this.state.filter)
+    );
+  };
+
+  deleteContact = (id) => {
+    this.setState((prevState) => {
+      return {
+        contacts: prevState.contacts.filter((item) => item.id !== id),
+      };
+    });
   };
 
   render() {
     return (
-      <>
-        {/* <form onSubmit={this.formSubmit}>
-          <label>
-            <InputPerson
-              value={this.state.name}
-              onChange={this.renderName}
-            ></InputPerson>
-            <InputContacts
-              value={this.state.contacts}
-              onChange={this.renderName}
-            ></InputContacts>
-            <InputButton text="Add name"></InputButton>
-          </label>
-        </form> */}
-        <Form onSubmit={this.formHandlerSubmit}></Form>
-        <Filter onChange={this.filterSubmit}></Filter>
-        {/* <Contact
-          id={uuidv4()}
-          name={this.state.name}
-          number={this.state.number}
-        ></Contact> */}
-        <ul>
-          {this.state.contacts.map((item) => (
-            <Contact key={item.id} name={item.name} number={item.number} />
-          ))}
-        </ul>
-      </>
+      <div className={styles.container}>
+        <div className={styles.section}>
+          <h1 className={styles.mainTitle}>Phonebook</h1>
+          <Form onSubmit={this.renderContact}></Form>
+          <h2 className={styles.mainTitle}>Contacts</h2>
+          <Filter
+            onChange={this.handleInputChange}
+            value={this.state.filter}
+          ></Filter>
+          <Contact
+            filter={this.filteredContacts}
+            onClick={this.deleteContact}
+          />
+        </div>
+      </div>
     );
   }
 }
-// console.log(uuidv4());
 
 export default App;
